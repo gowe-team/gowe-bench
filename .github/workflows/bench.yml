@@ -75,18 +75,19 @@ jobs:
           git -C "$dest" checkout --detach FETCH_HEAD
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          version: 10.18.1
+          version: 11.25.0
+          cache: true
+          cache-dependency-path: |
+            workspace/twilic-js/pnpm-lock.yaml
+            workspace/benchmark/pnpm-lock.yaml
+          install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
-          cache: pnpm
-          cache-dependency-path: |
-            workspace/twilic-js/pnpm-lock.yaml
-            workspace/benchmark/pnpm-lock.yaml
 
       - name: Setup Rust
         if: ${{ inputs.backend == 'wasm' }}
